@@ -13,8 +13,8 @@
 'blockquote',
 ['list' => 'bullet'],
 ['list' => 'ordered'],
-[ 'script' => 'super' ],
-[ 'script' => 'sub' ],
+['script' => 'super'],
+['script' => 'sub'],
 'link',
 'clean'
 ]

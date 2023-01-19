@@ -1,5 +1,5 @@
 {
-  "name": "music/timeline",
+  "name": "carnegiehall/timeline",
   "type": "project",
   "description": "",
   "keywords": [],
@@ -7,40 +7,37 @@
   "require": {
     "php": "^8.0.0",
     "area17/twill": "^2.0",
-    "facade/ignition": "^2.11",
-    "fideloper/proxy": "^4.0",
-    "filp/whoops": "^2.14",
-    "fruitcake/laravel-cors": "^2.0",
-    "laravel/framework": "^8.0",
-    "nunomaduro/collision": "^5.6",
+    "guzzlehttp/guzzle": "^7.2",
+    "kalnoy/nestedset": "^6.0",
+    "laravel/framework": "^9.19",
+    "laravel/horizon": "^5.10",
+    "laravel/sanctum": "^3.0",
+    "laravel/telescope": "^4.10",
+    "laravel/tinker": "^2.7",
     "pouler/apple-music-api": "^0.5.0",
-    "predis/predis": "^1.1"
+    "predis/predis": "^2.0",
+    "spatie/url": "^2.2"
   },
   "require-dev": {
-    "brianium/paratest": "^6.3",
-    "kitloong/laravel-migrations-generator": "^5.2",
-    "laravel/telescope": "^4.6",
-    "laravel/tinker": "^2.6",
-    "phpunit/phpunit": "^9.5"
+    "fakerphp/faker": "^1.9.1",
+    "laravel/pint": "^1.0",
+    "laravel/sail": "^1.16",
+    "mockery/mockery": "^1.4.4",
+    "nunomaduro/collision": "^6.1",
+    "phpunit/phpunit": "^9.5.10",
+    "spatie/laravel-ignition": "^1.0"
   },
   "config": {
     "optimize-autoloader": true,
     "preferred-install": "dist",
     "sort-packages": true
   },
-  "extra": {
-    "laravel": {
-      "dont-discover": []
-    }
-  },
   "autoload": {
     "psr-4": {
-      "App\\": "app/"
-    },
-    "classmap": [
-      "database/seeds",
-      "database/factories"
-    ]
+      "App\\": "app/",
+      "Database\\Factories\\": "database/factories/",
+      "Database\\Seeders\\": "database/seeders/"
+    }
   },
   "autoload-dev": {
     "psr-4": {

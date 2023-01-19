@@ -2,8 +2,8 @@
 
 namespace App\Models;
 
-
 use A17\Twill\Models\Model;
+use App\Models\Genre;
 
 class Theme extends Model
 {

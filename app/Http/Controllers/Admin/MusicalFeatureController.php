@@ -8,6 +8,10 @@ class MusicalFeatureController extends ModuleController
 {
   protected $moduleName = 'musicalFeatures';
 
+  protected $previewView = 'site.musicalFeatures';
+
+  protected $perPage = 50;
+
   protected $indexOptions = [
     'permalink' => false,
     'editInModal' => true

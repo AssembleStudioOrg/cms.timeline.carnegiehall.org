@@ -2,22 +2,26 @@
 
 namespace App\Repositories;
 
-use A17\Twill\Models\Behaviors\HasMedias;
+use A17\Twill\Repositories\Behaviors\HandleRevisions;
+use A17\Twill\Repositories\ModuleRepository;
+use App\Models\Genre;
+use App\Models\Song;
 use A17\Twill\Repositories\Behaviors\HandleBlocks;
 use A17\Twill\Repositories\Behaviors\HandleFiles;
 use A17\Twill\Repositories\Behaviors\HandleMedias;
 use A17\Twill\Repositories\Behaviors\HandleRepeaters;
 use A17\Twill\Repositories\Behaviors\HandleSlugs;
-use A17\Twill\Repositories\ModuleRepository;
-use App\Models\Author;
-use App\Models\Genre;
-use App\Models\Song;
 use App\Repositories\Behaviors\HandleBrowser;
 
 class GenreRepository extends ModuleRepository
 {
-
-  use HandleSlugs, HandleMedias, HandleRepeaters, HandleFiles, HandleBrowser, HandleBlocks;
+  use HandleSlugs;
+  use HandleMedias;
+  use HandleRepeaters;
+  use HandleFiles;
+  use HandleBrowser;
+  use HandleBlocks;
+  use HandleRevisions;
 
   public function __construct(Genre $model)
   {
@@ -26,7 +30,6 @@ class GenreRepository extends ModuleRepository
 
   public function afterSave($object, $fields)
   {
-    // $this->updateBelongsTo($object, $fields, 'author', Author::class);
     $this->updateBrowser($object, $fields, 'authors');
     $this->updateBelongsTo($object, $fields, 'song', Song::class);
     $this->updateBrowser($object, $fields, 'songs');
@@ -94,16 +97,6 @@ class GenreRepository extends ModuleRepository
         'edit' => moduleRoute('songs', '', 'edit', $song->id)
       ];
     }
-
-    // $author = $object->author;
-
-    // if ($author) {
-    //   $fields['browsers']['author'][] = [
-    //     'id' => $author->id,
-    //     'name' => $author->fullName,
-    //     'edit' => moduleRoute('authors', '', 'edit', $author->id)
-    //   ];
-    // }
 
     return $fields;
   }

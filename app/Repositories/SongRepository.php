@@ -4,13 +4,14 @@ namespace App\Repositories;
 
 use A17\Twill\Repositories\Behaviors\HandleFiles;
 use A17\Twill\Repositories\ModuleRepository;
+use App\Repositories\Behaviors\HandleBrowser;
 use App\Models\NotablePerformer;
 use App\Models\Song;
-use App\Repositories\Behaviors\HandleBrowser;
 
 class SongRepository extends ModuleRepository
 {
-  use HandleFiles, HandleBrowser;
+  use HandleFiles;
+  use HandleBrowser;
 
   public function __construct(Song $model)
   {
@@ -49,7 +50,7 @@ class SongRepository extends ModuleRepository
       $fields['browsers']['notable_performer'][] = [
         'id' => $artist->id,
         'name' => $artist->name,
-        'edit' => moduleRoute('notablePerformers', '', 'edit', $artist->id)
+        'edit' => moduleRoute('notable_performers', '', 'edit', $artist->id)
       ];
     }
 

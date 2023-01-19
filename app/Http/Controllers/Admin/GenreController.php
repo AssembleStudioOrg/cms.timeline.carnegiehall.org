@@ -9,14 +9,18 @@ use Illuminate\Support\Facades\Config;
 class GenreController extends ModuleController
 {
   protected $moduleName = 'genres';
+
+  protected $previewView = 'site.genre';
+
+  protected $perPage = 50;
+
   protected $titleColumnKey = 'name';
+
   protected $titleFormKey = 'name';
 
   protected $indexOptions = [
     'permalink' => true
   ];
-
-  // protected $permalinkBase = '';
 
   protected $indexColumns = [
     'hero_image' => [
@@ -30,13 +34,20 @@ class GenreController extends ModuleController
       'title' => 'Title',
       'field' => 'name',
     ],
+    'song' => [ // relation column
+      'title' => 'Default Song name',
+      'relationship' => 'song',
+      'field' => 'title'
+    ],
     'year_start' => [ // field column
       'title' => 'Year Start',
       'field' => 'year_start',
+      'sort' => true,
     ],
     'year_finish' => [ // field column
       'title' => 'Year Finish',
       'field' => 'year_finish',
+      'sort' => true,
     ],
   ];
 
@@ -70,7 +81,6 @@ class GenreController extends ModuleController
   protected function formData($request): array
   {
     return [
-      'editor' => false,
       'traditions' => $this->getTraditions()
     ];
   }

@@ -1,29 +1,37 @@
 <?php
 
 return [
-  'stories' => [
-    'title' => 'Stories',
-    'module' => true
-  ],
-  'genres' => [
-    'title' => 'Genres',
-    'module' => true
-  ],
-  'notablePerformers' => [
-    'title' => 'Performers',
-    'module' => true
-  ],
-  'songs' => [
-    'title' => 'Songs',
-    'module' => true
-  ],
+
   'more' => [
-    'title' => 'More',
-    'route' => 'admin.more.authors.index',
+    'title' => 'Manage Content',
+    'route' => 'admin.more.stories.index',
     'primary_navigation' => [
+      'pages' => [
+        'title' => 'Pages',
+        'module' => true,
+      ],
+      'stories' => [
+        'title' => 'Stories',
+        'module' => true
+      ],
+      'genres' => [
+        'title' => 'Genres',
+        'module' => true
+      ],
+      'notablePerformers' => [
+        'title' => 'Performers',
+        'module' => true
+      ],
+      'songs' => [
+        'title' => 'Songs',
+        'module' => true
+      ],
+      'musicVideos' => [
+        'title' => 'Music Videos',
+        'module' => true
+      ],
       'authors' => [
         'title' => 'Authors',
-        'create' => false,
         'module' => true
       ],
       'themes' => [
@@ -38,11 +46,6 @@ return [
         'title' => 'Musical Features',
         'module' => true
       ],
-      'aboutPage' => [
-        'title' => 'About Page',
-        'route' => 'landing',
-        'module' => true
-      ],
       'globalFooters' => [
         'title' => 'Global Footer',
         'route' => 'landing',
@@ -55,8 +58,39 @@ return [
       ],
     ]
   ],
+  'menus' => [
+    'title' => 'Menus',
+    'module' => true
+  ],
   'deploy' => [
-    'title' => 'Trigger Deploy',
+    'title' => 'Build & Deploy',
     'route' => 'admin.deploy'
+  ],
+  'settings' => [
+    'title' => 'CMS Settings',
+    'route' => 'admin.settings',
+    'params' => ['section' => 'vercel'],
+    'primary_navigation' => [
+      'vercel' => [
+        'title' => 'Vercel',
+        'route' => 'admin.settings',
+        'params' => ['section' => 'vercel']
+      ],
+      'preview' => [
+        'title' => 'Preview',
+        'route' => 'admin.settings',
+        'params' => ['section' => 'preview']
+      ],
+      'apple-music-notifier' => [
+        'title' => 'Apple Music Notifier',
+        'customTitle' => 'test',
+        'route' => 'admin.settings',
+        'params' => ['section' => 'apple-music-notifier']
+      ],
+    ]
+  ],
+  'appleMusicStatus' => [
+    'title' => 'Apple Music Notifier',
+    'route' => 'admin.appleMusicStatus',
   ],
 ];

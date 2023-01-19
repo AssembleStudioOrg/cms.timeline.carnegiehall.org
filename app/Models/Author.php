@@ -2,13 +2,17 @@
 
 namespace App\Models;
 
-use A17\Twill\Models\Behaviors\HasRelated;
 use A17\Twill\Models\Behaviors\HasPosition;
+use A17\Twill\Models\Behaviors\HasRelated;
+use A17\Twill\Models\Behaviors\HasRevisions;
 use A17\Twill\Models\Model;
+use App\Models\Story;
 
 class Author extends Model
 {
-  use HasRelated, HasPosition;
+  use HasRelated;
+  use HasPosition;
+  use HasRevisions;
 
   protected $fillable = [
     'published',

@@ -10,12 +10,6 @@
 'maxlength' => 400,
 'toolbarOptions' => [
 'bold',
-// 'italic',
-// ['list' => 'bullet'],
-// ['list' => 'ordered'],
-// [ 'script' => 'super' ],
-// [ 'script' => 'sub' ],
-// 'link',
 'clean'
 ],
 ])

@@ -12,19 +12,6 @@
 'required' => true
 ])
 
-{{-- @formField('wysiwyg', [
-'name' => 'short_bio',
-'label' => 'Short Bio',
-'required' => false,
-'maxlength' => 400,
-'toolbarOptions' => [
-'bold',
-'italic',
-'link',
-'clean'
-],
-]) --}}
-
 @formField('wysiwyg', [
 'name' => 'bio',
 'label' => 'Bio',

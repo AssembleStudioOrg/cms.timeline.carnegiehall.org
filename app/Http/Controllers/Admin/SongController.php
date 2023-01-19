@@ -7,36 +7,51 @@ use A17\Twill\Http\Controllers\Admin\ModuleController;
 class SongController extends ModuleController
 {
   protected $moduleName = 'songs';
+
+  protected $previewView = 'site.song';
+
+  protected $perPage = 50;
+
   protected $defaultFilters = ['search' => 'title|performer|search'];
 
   protected $indexOptions = [
-    'permalink' => false
+    'permalink' => false,
   ];
 
-  /*
-     * Available columns of the index view
-     */
   protected $indexColumns = [
+    'hero' => [
+      'thumb' => true, // image column
+    ],
     'title' => [ // field column
       'title' => 'Title',
       'field' => 'title',
     ],
-    'artist' => [ // relation column
-      // Take a look at the example in the next section fot the implementation of the sort
-      'title' => 'Performer',
-      'field' => 'artist',
-      'visible' => true
+    'notable_performer' => [ // relation column
+      'title' => 'Related Performer',
+      'relationship' => 'notable_performer',
+      'field' => 'name',
+      'visible' => true,
+    ],
+    'apple_music_artist_name' => [ // field column
+      'title' => 'Apple Music Artist name',
+      'field' => 'apple_music_artist_name',
+      'visible' => true,
+    ],
+    'apple_music_song_name' => [ // field column
+      'title' => 'Apple Music Song name',
+      'field' => 'apple_music_song_name',
+      'visible' => true,
     ],
     'id' => [ // field column
       'title' => 'ID',
       'field' => 'id',
-    ]
+    ],
   ];
 
   /*
-     * Columns of the browser view for this module when browsed from another module
-     * using a browser form field
-     */
+  * Columns of the browser view for this module when browsed from another module
+  * using a browser form field
+  */
   protected $browserColumns = [
     'title' => [
       'title' => 'Title',

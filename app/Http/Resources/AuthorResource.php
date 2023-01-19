@@ -18,7 +18,6 @@ class AuthorResource extends JsonResource
       'id' => $this->id,
       'first_name' => $this->first_name,
       'last_name' => $this->last_name,
-      // 'short_bio' => $this->short_bio,
       'bio' => $this->bio,
       'external_link' => $this->external_link
     ];

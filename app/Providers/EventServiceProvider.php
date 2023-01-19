@@ -2,6 +2,10 @@
 
 namespace App\Providers;
 
+use App\Models\MusicVideo;
+use App\Models\Song;
+use App\Observers\MusicVideoObserver;
+use App\Observers\SongObserver;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
@@ -27,5 +31,7 @@ class EventServiceProvider extends ServiceProvider
   public function boot()
   {
     parent::boot();
+    Song::observe(SongObserver::class);
+    MusicVideo::observe(MusicVideoObserver::class);
   }
 }

@@ -5,12 +5,26 @@ namespace App\Models;
 use A17\Twill\Models\Behaviors\HasBlocks;
 use A17\Twill\Models\Behaviors\HasFiles;
 use A17\Twill\Models\Behaviors\HasMedias;
+use A17\Twill\Models\Behaviors\HasRevisions;
 use A17\Twill\Models\Behaviors\HasSlug;
 use A17\Twill\Models\Model;
+use A17\Twill\Repositories\SettingRepository;
+use App\Models\Author;
+use App\Models\Instrument;
+use App\Models\MusicalFeature;
+use App\Models\NotablePerformer;
+use App\Models\Song;
+use App\Models\Story;
+use App\Models\Theme;
+use Spatie\Url\Url;
 
 class Genre extends Model
 {
-  use HasSlug, HasMedias, HasFiles, HasBlocks;
+  use HasSlug;
+  use HasMedias;
+  use HasFiles;
+  use HasBlocks;
+  use HasRevisions;
 
   protected $fillable = [
     'name',
@@ -27,6 +41,7 @@ class Genre extends Model
     'published',
     'seo_title',
     'seo_description',
+    'seo_keywords',
   ];
 
   public $slugAttributes = [
@@ -86,9 +101,15 @@ class Genre extends Model
     return $this->name;
   }
 
+  public function getPreviewUrlAttribute()
+  {
+    $previewPath = ['api', 'preview'];
+    $url = Url::fromString((string) app(SettingRepository::class)->byKey('preview_base_url'));
+    return $url->withPath(join('/', [...$previewPath, 'genres', $this->slug]));
+  }
+
   public function authors()
   {
-    // return $this->belongsToMany(Author::class, 'story_author', 'story_id');
     return $this->belongsToMany(Author::class, 'genre_author', 'genre_id')
       ->withPivot(['position'])
       ->orderBy('pivot_position', 'asc');

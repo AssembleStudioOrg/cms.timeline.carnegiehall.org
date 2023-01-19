@@ -7,7 +7,11 @@ use A17\Twill\Http\Controllers\Admin\ModuleController;
 class AuthorController extends ModuleController
 {
   protected $moduleName = 'authors';
-  protected $perPage = 120;
+
+  protected $previewView = 'site.author';
+
+  protected $perPage = 50;
+
   protected $defaultOrders = ['position' => 'desc'];
 
   protected $indexColumns = [

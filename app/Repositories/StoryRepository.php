@@ -5,15 +5,20 @@ namespace App\Repositories;
 use A17\Twill\Repositories\Behaviors\HandleBlocks;
 use A17\Twill\Repositories\Behaviors\HandleFiles;
 use A17\Twill\Repositories\Behaviors\HandleMedias;
+use A17\Twill\Repositories\Behaviors\HandleRevisions;
 use A17\Twill\Repositories\Behaviors\HandleSlugs;
 use A17\Twill\Repositories\ModuleRepository;
-use App\Models\Song;
-use App\Models\Story;
 use App\Repositories\Behaviors\HandleBrowser;
+use App\Models\Story;
 
 class StoryRepository extends ModuleRepository
 {
-  use HandleSlugs, HandleMedias, HandleBlocks, HandleFiles, HandleBrowser;
+  use HandleBlocks;
+  use HandleBrowser;
+  use HandleFiles;
+  use HandleMedias;
+  use HandleRevisions;
+  use HandleSlugs;
 
   public function __construct(Story $model)
   {
@@ -28,9 +33,9 @@ class StoryRepository extends ModuleRepository
 
   public function afterSave($object, $fields)
   {
-    // $this->updateBelongsTo($object, $fields, 'author', Author::class);
     $this->updateBelongsTo($object, $fields, 'song', Song::class);
     $this->updateBrowser($object, $fields, 'authors');
+
     parent::afterSave($object, $fields);
   }
 
@@ -48,16 +53,6 @@ class StoryRepository extends ModuleRepository
         'edit' => moduleRoute('songs', '', 'edit', $song->id)
       ];
     }
-
-    // $author = $object->author;
-
-    // if ($author) {
-    //   $fields['browsers']['author'][] = [
-    //     'id' => $author->id,
-    //     'name' => $author->fullName,
-    //     'edit' => moduleRoute('authors', '', 'edit', $author->id)
-    //   ];
-    // }
 
     return $fields;
   }

@@ -8,6 +8,13 @@
 'note' => 'Minimum image width 600px'
 ])
 
+@formField('browser', [
+'moduleName' => 'musicVideos',
+'name' => 'musicVideos',
+'label' => 'Apple Music Video',
+'max' => 1
+])
+
 @formField('input', [
 'name' => 'vimeo_url',
 'label' => 'Vimeo URL',

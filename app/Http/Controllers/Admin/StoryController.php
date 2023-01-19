@@ -9,6 +9,10 @@ class StoryController extends ModuleController
 {
   protected $moduleName = 'stories';
 
+  protected $previewView = 'site.story';
+
+  protected $perPage = 50;
+
   protected $indexOptions = [
     'permalink' => true,
     'reorder' => true
@@ -25,6 +29,11 @@ class StoryController extends ModuleController
     'title' => [ // field column
       'title' => 'Title',
       'field' => 'title',
+    ],
+    'song' => [ // relation column
+      'title' => 'Default Song name',
+      'relationship' => 'song',
+      'field' => 'title'
     ],
     'position' => [ // field column
       'title' => 'Story Number',
@@ -45,12 +54,5 @@ class StoryController extends ModuleController
       . ($this->moduleHas('revisions') ? '{preview}/' : '')
       . ($this->permalinkBase ?? $this->getModulePermalinkBase())
       . (isset($this->permalinkBase) && empty($this->permalinkBase) ? '' : '/');
-  }
-
-  protected function formData($request): array
-  {
-    return [
-      'editor' => false,
-    ];
   }
 }

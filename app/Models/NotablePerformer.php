@@ -3,17 +3,24 @@
 namespace App\Models;
 
 use A17\Twill\Models\Behaviors\HasMedias;
+use A17\Twill\Models\Behaviors\HasSlug;
 use A17\Twill\Models\Model;
+use Illuminate\Support\Facades\DB;
 
 class NotablePerformer extends Model
 {
-
+  use HasSlug;
   use HasMedias;
 
   protected $fillable = [
     'published',
     'name',
-    'attribution'
+    'attribution',
+    'ch_agent_id',
+    'show_in_menu',
+    'seo_title',
+    'seo_description',
+    'seo_keywords'
   ];
 
   public $checkboxes = [
@@ -34,6 +41,13 @@ class NotablePerformer extends Model
         ],
       ],
     ],
+    'seo_image' => [
+      'default' => [
+        [
+          'name' => 'default'
+        ]
+      ]
+    ]
   ];
 
   protected $browserColumns = [
@@ -43,9 +57,36 @@ class NotablePerformer extends Model
     ],
   ];
 
+  public $slugAttributes = [
+    'name'
+  ];
+
   public function getTitleAttribute()
   {
     return $this->name;
+  }
+
+  /**
+   * This is a duplicate of the method on HasSlug.
+   */
+  public function getExistingSlug($slugParams)
+  {
+    $query = DB::table($this->getSlugsTable())->where($this->getForeignKey(), $this->id);
+    unset($slugParams['active']);
+
+    foreach ($slugParams as $key => $value) {
+      //check variations of the slug
+      if ($key == 'slug') {
+        $query->where(function ($query) use ($value) {
+          $query->orWhere('slug', $value);
+          $query->orWhere('slug', $value . '-' . $this->getSuffixSlug());
+        });
+      } else {
+        $query->where($key, $value);
+      }
+    }
+
+    return $query->first();
   }
 
   public function songs()

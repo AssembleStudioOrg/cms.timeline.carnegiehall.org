@@ -1,0 +1,112 @@
+.custom-table {
+  margin: 0 -20px -20px -20px;
+  padding: 0 20px;
+
+  .table {
+    display: table;
+    border-collapse: collapse;
+    border-spacing: 0;
+    text-align: left;
+    font-size: 14px;
+    width: 100%;
+
+    span {
+      color: #999;
+    }
+
+    td {
+      padding: 1rem 10px;
+      border-bottom: 1px solid #f8f8f8;
+      vertical-align: middle;
+    }
+
+    tr:last-child td {
+      border-bottom: 0;
+    }
+
+    .nothing {
+      color: #999;
+      font-size: 13px;
+      padding: 1rem 0;
+    }
+
+    .song-check-details {
+      padding-top: 4px;
+
+      p {
+        color: #999;
+        font-size: 13px;
+        padding: 0;
+      }
+    }
+
+    .checked {
+      p {
+        color: #999;
+        font-size: 12px;
+        padding: 0;
+        line-height: 1.2;
+      }
+    }
+  }
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.run-check-resource-urls {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 0 0 1rem 0;
+
+  > a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.5rem 1.5rem;
+    background-color: #68b496;
+    color: white;
+    border-radius: 5rem;
+    font-size: 14px;
+    text-decoration: none;
+
+    &:hover {
+      background-color: #57a888;
+    }
+
+    .spin {
+      animation: spin 1s linear infinite;
+    }
+  }
+
+  > span {
+    font-size: 14px;
+    color: #555;
+  }
+
+  .error {
+    font-size: 14px;
+    color: black;
+    padding: 2px 4px;
+    background: #ffffbf;
+  }
+
+  .email {
+    padding: 6px 8px;
+    border: 1px solid #ccc;
+    background: white;
+    border-radius: 50px;
+    margin: 0 2px 0 0;
+  }
+}
+
+.col--aside > div {
+  position: static !important;
+}

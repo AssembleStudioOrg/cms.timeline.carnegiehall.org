@@ -1,16 +1,18 @@
 {
   "cSpell.words": [
-    "Csrf",
-    "Fideloper",
-    "Laravel",
-    "Medias",
-    "Poule",
     "blockable",
     "classmap",
+    "Csrf",
     "dont",
+    "Fideloper",
+    "Laravel",
+    "mediable",
+    "Medias",
     "metadatas",
     "phpunit",
+    "Poule",
     "pouler",
-    "predis"
+    "predis",
+    "Spatie"
   ]
 }

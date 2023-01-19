@@ -16,3 +16,9 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
   return redirect()->route('admin.dashboard');
 });
+
+Route::get('/', fn () => print(''))->name('front.home');
+Route::get('/story', fn () => print(''))->name('front.story');
+Route::get('/author', fn () => print(''))->name('front.author');
+Route::get('/song', fn () => print(''))->name('front.song');
+Route::get('/notable-performer', fn () => print(''))->name('front.notablePerformer');

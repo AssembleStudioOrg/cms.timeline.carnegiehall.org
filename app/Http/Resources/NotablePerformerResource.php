@@ -16,11 +16,19 @@ class NotablePerformerResource extends JsonResource
   {
     return [
       'id' => $this->id,
+      'slug' => $this->slug,
       'name' => $this->name,
       'image' => $this->image('image'),
       'attribution' => $this->attribution,
-      'created_at' => $this->created_at,
-      'updated_at' => $this->updated_at,
+      'ch_agent_id' => $this->ch_agent_id,
+      'show_in_menu' => boolval($this->show_in_menu),
+      // 'songs' => SongResource::collection($this->songs), Not needed. See: https://simonbetton.slack.com/archives/C04BF3UFYN9/p1673223811689739
+      'seo' => [
+        'title' => $this->seo_title,
+        'description' => $this->seo_description,
+        'keywords' => $this->seo_keywords ?? null,
+        'image' => $this->image('seo_image')
+      ]
     ];
   }
 }

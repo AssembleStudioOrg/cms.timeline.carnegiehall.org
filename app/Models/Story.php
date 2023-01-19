@@ -6,27 +6,38 @@ use A17\Twill\Models\Behaviors\HasBlocks;
 use A17\Twill\Models\Behaviors\HasFiles;
 use A17\Twill\Models\Behaviors\HasMedias;
 use A17\Twill\Models\Behaviors\HasPosition;
+use A17\Twill\Models\Behaviors\HasRevisions;
 use A17\Twill\Models\Behaviors\HasSlug;
 use A17\Twill\Models\Model;
+use A17\Twill\Repositories\SettingRepository;
+use App\Models\Author;
+use App\Models\Song;
 use Illuminate\Support\Facades\DB;
+use Spatie\Url\Url;
 
 class Story extends Model
 {
-  use HasSlug, HasMedias, HasBlocks, HasFiles, HasPosition;
+  use HasSlug;
+  use HasMedias;
+  use HasBlocks;
+  use HasFiles;
+  use HasPosition;
+  use HasRevisions;
 
   protected $fillable = [
     'title',
     'published',
     'year_start',
     'year_finish',
-    'seo_title',
-    'seo_description',
     'hero_image_attribution',
     'position',
     'song_id',
     'author_id',
     'color',
-    'citation'
+    'citation',
+    'seo_title',
+    'seo_description',
+    'seo_keywords',
   ];
 
   public $slugAttributes = [
@@ -76,12 +87,6 @@ class Story extends Model
         $query->where(function ($query) use ($value) {
           $query->orWhere('slug', $value);
           $query->orWhere('slug', $value . '-' . $this->getSuffixSlug());
-          /*
-          * Lets remove this so that we have have an original URL without a variation
-          */
-          // for ($i = 2; $i <= $this->nb_variation_slug; $i++) {
-          //   $query->orWhere('slug', $value . '-' . $i);
-          // }
         });
       } else {
         $query->where($key, $value);
@@ -91,6 +96,12 @@ class Story extends Model
     return $query->first();
   }
 
+  public function getPreviewUrlAttribute()
+  {
+    $previewPath = ['api', 'preview'];
+    $url = Url::fromString((string) app(SettingRepository::class)->byKey('preview_base_url'));
+    return $url->withPath(join('/', [...$previewPath, 'stories', $this->slug]));
+  }
 
   public function genres()
   {
@@ -99,7 +110,6 @@ class Story extends Model
 
   public function authors()
   {
-    // return $this->belongsToMany(Author::class, 'story_author', 'story_id');
     return $this->belongsToMany(Author::class, 'story_author', 'story_id')
       ->withPivot(['position'])
       ->orderBy('pivot_position', 'asc');

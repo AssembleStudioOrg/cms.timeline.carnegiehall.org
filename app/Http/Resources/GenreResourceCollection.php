@@ -2,7 +2,6 @@
 
 namespace App\Http\Resources;
 
-use A17\Twill\Repositories\SettingRepository;
 use Illuminate\Http\Resources\Json\ResourceCollection;
 
 class GenreResourceCollection extends ResourceCollection
@@ -15,7 +14,7 @@ class GenreResourceCollection extends ResourceCollection
    */
   public function toArray($request)
   {
-    if (get_class($this->resource) === 'Illuminate\Pagination\LengthAwarePaginator') {
+    if (get_class($this->resource) === 'Illuminate\Pagination\LengthAwarePaginator' && !str_contains($request->route()->uri, 'v2')) {
       return [
         'count' => $this->count(),
         'total' => $this->total(),

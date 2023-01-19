@@ -2,8 +2,10 @@
 
 return [
   'enabled' => [
-    'settings' => false
+    'settings' => true,
+    'site-link' => true,
   ],
+  'migrations_use_big_integers' => true,
   'dashboard' => [
     'modules' => [
       \App\Models\Story::class => [
@@ -67,21 +69,4 @@ return [
       ['name' => 'identifier', 'label' => 'Identifier']
     ]
   ],
-  'capsules' => [
-    'list' => [
-      [
-        'name' => 'globalFooters',
-        'enabled' => true
-      ],
-      [
-        'name' => 'aboutPage',
-        'enabled' => true
-      ],
-      [
-        'name' => 'siteSettings',
-        'enabled' => true
-      ]
-    ]
-  ],
-
 ];

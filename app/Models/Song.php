@@ -2,18 +2,15 @@
 
 namespace App\Models;
 
-use Illuminate\Support\Facades\Cache;
 use A17\Twill\Models\Behaviors\HasFiles;
 use A17\Twill\Models\Behaviors\HasRelated;
 use A17\Twill\Models\Model;
-use \Symfony\Component\HttpClient\CurlHttpClient;
-use PouleR\AppleMusicAPI\APIClient;
-use PouleR\AppleMusicAPI\AppleMusicAPI;
-use Illuminate\Support\Facades\Log;
+use App\Models\NotablePerformer;
 
 class Song extends Model
 {
-  use HasRelated, HasFiles;
+  use HasRelated;
+  use HasFiles;
 
   protected $fillable = [
     'published',
@@ -21,43 +18,98 @@ class Song extends Model
     'mp4_sound',
     'mp4_video',
     'apple_music_song_id',
-    'notable_performer_id'
+    'notable_performer_id',
+    'apple_music_payload',
+    'apple_music_data_updated_at',
   ];
 
   public $checkboxes = [
     'published'
   ];
 
+  protected $casts = [
+    'apple_music_payload' => 'object',
+  ];
+
   public $filesParams = ['song', 'video'];
+
+  public $mediasParams = [
+    'hero' => [
+      'default' => []
+    ],
+  ];
+
+  public function cmsImage()
+  {
+    return isset($this->apple_music_artwork->url) ? str_replace('{w}', '600', str_replace('{h}', '600', $this->apple_music_artwork->url)) : null;
+  }
+
+  public function getAppleMusicPayloadAsStringAttribute()
+  {
+    if ($this->apple_music_payload) {
+      return json_encode($this->apple_music_payload, JSON_PRETTY_PRINT);
+    }
+
+    return null;
+  }
+
+  public function getAppleMusicSongNameAttribute()
+  {
+    if (isset($this->apple_music_payload->data[0]->attributes->name)) {
+      return $this->apple_music_payload->data[0]->attributes->name;
+    }
+
+    return null;
+  }
+
+  public function getAppleMusicArtistNameAttribute()
+  {
+    if (isset($this->apple_music_payload->data[0]->attributes->artistName)) {
+      return $this->apple_music_payload->data[0]->attributes->artistName;
+    }
+
+    return null;
+  }
+
+  public function getAppleMusicAlbumNameAttribute()
+  {
+    if (isset($this->apple_music_payload->data[0]->attributes->albumName)) {
+      return $this->apple_music_payload->data[0]->attributes->albumName;
+    }
+
+    return null;
+  }
+
+  public function getAppleMusicReleaseDateAttribute()
+  {
+    if (isset($this->apple_music_payload->data[0]->attributes->releaseDate)) {
+      return $this->apple_music_payload->data[0]->attributes->releaseDate;
+    }
+
+    return null;
+  }
+
+  public function getAppleMusicArtworkAttribute()
+  {
+    if (isset($this->apple_music_payload->data[0]->attributes->artwork)) {
+      return $this->apple_music_payload->data[0]->attributes->artwork;
+    }
+
+    return null;
+  }
+
+  public function getAppleMusicPreviewSongUrlAttribute()
+  {
+    if (isset($this->apple_music_payload->data[0]->attributes->previews[0]->url)) {
+      return $this->apple_music_payload->data[0]->attributes->previews[0]->url;
+    }
+
+    return null;
+  }
 
   public function getArtistAttribute()
   {
     return optional($this->notable_performer)->name;
-  }
-
-  public function getAppleMusicPreviewUrlAttribute()
-  {
-    if ($this->apple_music_song_id) {
-      try {
-        return Cache::remember('apple_music_song_' . $this->apple_music_song_id, 60 * 30, function () {
-          $curl = new CurlHttpClient(['max_duration' => 5]);
-          $client = new APIClient($curl);
-          $client->setDeveloperToken(config('apple-music.developer_token'));
-          $api = new AppleMusicAPI($client);
-          $result = $api->getCatalogSong('us', $this->apple_music_song_id);
-          if ($result && $result->data[0]->attributes->previews[0]->url) {
-            return $result->data[0]->attributes->previews[0]->url;
-          }
-
-          return null;
-        });
-      } catch (\Throwable $th) {
-        report($th);
-        Log::warning('Song failed to be fetched from Apple Music: ' . $this->apple_music_song_id);
-        return false;
-      }
-    }
-    return null;
   }
 
   public function genres()

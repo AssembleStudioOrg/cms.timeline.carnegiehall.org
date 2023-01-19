@@ -1,0 +1,62 @@
+<?php
+
+namespace App\Http\Controllers\Admin;
+
+use A17\Twill\Http\Controllers\Admin\ModuleController;
+
+class MusicVideoController extends ModuleController
+{
+  protected $moduleName = 'musicVideos';
+
+  protected $previewView = 'site.music-video';
+
+  protected $perPage = 50;
+
+  protected $defaultFilters = ['search' => 'title|performer|search'];
+
+  protected $indexOptions = [
+    'permalink' => false,
+  ];
+
+  protected $indexColumns = [
+    'hero' => [
+      'thumb' => true, // image column
+    ],
+    'title' => [ // field column
+      'title' => 'Title',
+      'field' => 'title',
+    ],
+    'apple_music_artist_name' => [ // field column
+      'title' => 'Apple Music Artist name',
+      'field' => 'apple_music_artist_name',
+      'visible' => true,
+    ],
+    'apple_music_video_song_name' => [ // field column
+      'title' => 'Apple Music Song name',
+      'field' => 'apple_music_video_song_name',
+      'visible' => true,
+    ],
+    'id' => [ // field column
+      'title' => 'ID',
+      'field' => 'id',
+    ],
+  ];
+
+  /*
+  * Columns of the browser view for this module when browsed from another module
+  * using a browser form field
+  */
+  protected $browserColumns = [
+    'title' => [
+      'title' => 'Title',
+      'field' => 'title',
+    ]
+  ];
+
+  protected function formData($request): array
+  {
+    return [
+      'editor' => false,
+    ];
+  }
+}

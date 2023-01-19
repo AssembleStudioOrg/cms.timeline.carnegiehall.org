@@ -2,12 +2,15 @@
 
 namespace App\Repositories;
 
+use A17\Twill\Repositories\Behaviors\HandleRevisions;
 use A17\Twill\Repositories\ModuleRepository;
 use App\Models\Author;
 use Illuminate\Support\Str;
 
 class AuthorRepository extends ModuleRepository
 {
+  use HandleRevisions;
+
   public function __construct(Author $model)
   {
     $this->model = $model;
