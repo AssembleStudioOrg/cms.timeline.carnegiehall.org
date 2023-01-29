@@ -17,11 +17,11 @@
 @formField('input', [
     'name' => 'lat',
     'label' => 'Latitude',
-    'maxlength' => 10,
+    'maxlength' => 20,
 ])
 
 @formField('input', [
     'name' => 'lng',
     'label' => 'Longitude',
-    'maxlength' => 10,
+    'maxlength' => 20,
 ])
